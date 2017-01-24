@@ -59,83 +59,86 @@ If you ever need to kill Checkman:
 
 # Included check scripts
 
-* `site.check <URL>`  
-  checks returned http response for 200 OK  
+* `site.check <URL>`
+  checks returned http response for 200 OK
   e.g. `site.check http://www.google.com`
 
-* `cctray.check https://user:pass@<CCTRAY_URL> <PIPELINE_NAME>`  
-  checks the status of a GoCD pipeline  
+* `cctray.check https://user:pass@<CCTRAY_URL> <PIPELINE_NAME>`
+  checks the status of a GoCD pipeline
   e.g. `cctray.check https://admin:badger@[your_go_server]/go/cctray.xml`
 
-* `concourse.check <ATC_URL> [USERNAME] [PASSWORD] <PIPELINE_NAME> <JOB_NAME>`  
+* `concourse.check <ATC_URL> [USERNAME] [PASSWORD] <PIPELINE_NAME> <JOB_NAME>`
   checks status of a job in a [Concourse](http://concourse.ci) pipelne
-  e.g. `concourse.check https://ci.concourse.ci admin passw0rd deploy`  
+  e.g. `concourse.check https://ci.concourse.ci admin passw0rd deploy`
 
-* `jenkins_build.check <JENKINS_URL> <JOB_NAME>`  
-  checks specific Jenkins build status  
-  e.g. `jenkins_build.check https://user:pass@ci.jenkins-ci.org jenkins_main_trunk`  
+* `jenkins_build.check <JENKINS_URL> <JOB_NAME>`
+  checks specific Jenkins build status
+  e.g. `jenkins_build.check https://user:pass@ci.jenkins-ci.org jenkins_main_trunk`
   (Tip: Encode `@` symbol as `%40` in username)
 
-* `travis.check <REPO_OWNER> <REPO_NAME> [<REPO_BRANCH>] [<REPO_TOKEN>]`  
-  checks specific Travis CI build status  
+* `travis.check <REPO_OWNER> <REPO_NAME> [<REPO_BRANCH>] [<REPO_TOKEN>]`
+  checks specific Travis CI build status
   e.g. `travis.check rails arel`
 
-* `semaphore.check <PROJECT_API_ID> <BRANCH_ID> <AUTH_TOKEN>`  
-  checks specific SemaphoreApp CI build status  
-  e.g. `semaphore.check 0691ba134341d1baa978436535b6f2b79fec91 27680 1iGx6asGJHk6aMdsB4eu`  
+* `semaphore.check <PROJECT_API_ID> <BRANCH_ID> <AUTH_TOKEN>`
+  checks specific SemaphoreApp CI build status
+  e.g. `semaphore.check 0691ba134341d1baa978436535b6f2b79fec91 27680 1iGx6asGJHk6aMdsB4eu`
   (Tip: open project's settings page, then find the "API" tab to get required ids)
-  
-* `codeship.check <PROJECT_ID> <API_KEY> <REPO_BRANCH>`  
-  checks specific Codeship CI build status  
-  e.g. `codeship.check 12345 0ea7bbedf3340775cecee5f816d03bdfac69c81f816d03bdfac69c81fqw2 master`  
+
+* `codeship.check <PROJECT_ID> <API_KEY> <REPO_BRANCH>`
+  checks specific Codeship CI build status
+  e.g. `codeship.check 12345 0ea7bbedf3340775cecee5f816d03bdfac69c81f816d03bdfac69c81fqw2 master`
   (Tip: find the API_KEY under account settings)
 
-* `circleci.check <USERNAME> <PROJECT_NAME> <BRANCH_NAME> <API_TOKEN>`  
-  checks specific Circle CI build status  
-  e.g. `circleci.check myusername myproject master 73e86a18efba7df5cfc5e03c4b67ff06685c5a75`  
+* `circleci.check <USERNAME> <PROJECT_NAME> <BRANCH_NAME> <API_TOKEN>`
+  checks specific Circle CI build status
+  e.g. `circleci.check myusername myproject master 73e86a18efba7df5cfc5e03c4b67ff06685c5a75`
   (Tip: open project's setting page, then find the "API Tokens" tab to create an API token of type 'status' or 'all')
 
-* `circlecijson.check <USERNAME> <PROJECT_NAME> <BRANCH_NAME> <API_TOKEN>`  
-  checks specific Circle CI build status using the JSON interface which provides build time data  
-  e.g. `circlecijson.check myusername myproject master 6cadaa96f7c455a658e00dd4500adc8f654342cc`  
+* `circlecijson.check <USERNAME> <PROJECT_NAME> <BRANCH_NAME> <API_TOKEN>`
+  checks specific Circle CI build status using the JSON interface which provides build time data
+  e.g. `circlecijson.check myusername myproject master 6cadaa96f7c455a658e00dd4500adc8f654342cc`
   (Tip: open project's setting page, then find the "API Tokens" tab to create an API token of type 'all')
 
-* `test.check <OPTION_0> ... <OPTION_N>` returns predefined check result  
-  (options: url, info, fail, changing, slow, error, flapping)  
+* `test.check <OPTION_0> ... <OPTION_N>` returns predefined check result
+  (options: url, info, fail, changing, slow, error, flapping)
   e.g. `test.check fail slow`
 
-* `airbrake.check <ACCOUNT_NAME> <API_TOKEN> <PROJECT_ID>`  
-  checks for recent errors  
+* `airbrake.check <ACCOUNT_NAME> <API_TOKEN> <PROJECT_ID>`
+  checks for recent errors
   e.g. `airbrake.check my-company 2a743rueigw87tegiofs7g 43878087`
 
-* `github_issues.check <REPO_OWNER> <REPO_NAME>`  
-  checks for issues in GitHub repo  
-  e.g. `github_issues.check rails rails`  
+* `github_issues.check <REPO_OWNER> <REPO_NAME>`
+  checks for issues in GitHub repo
+  e.g. `github_issues.check rails rails`
   (Tip: Since GitHub rate limits api requests set
   `GITHUB_ISSUES_CHECK_CLIENT_ID` and `GITHUB_ISSUES_CHECK_CLIENT_SECRET`.
   See [check's code](scripts/github_issues.check) on how to obtain client id/secret.)
 
-* `tracker.check <PROJECT_ID> <API_KEY> <FULL USER NAME>`    
-  Checks for your owned story statuses in Tracker, requires the [Pivotal Tracker Gem](https://github.com/jsmestad/pivotal-tracker).    
+* `tracker.check <PROJECT_ID> <API_KEY> <FULL USER NAME>`
+  Checks for your owned story statuses in Tracker, requires the [Pivotal Tracker Gem](https://github.com/jsmestad/pivotal-tracker).
   e.g `tracker.check 1234 ABC123 Trent Beatie`
   * **Green:** You don't own any rejected stories
   * **Red:** You own a rejected story
   * **Pending:** You haven't started a story
 
-* `tddium.check <ORGANIZATION_TOKEN> <PROJECT_NAME> <BRANCH_NAME>`  
-  Checks specific TDDium project build status.  
-  e.g. `tddium.check 0691ba134341d1baa978436535b6f2b79fec91 project branch_name`  
+* `tddium.check <ORGANIZATION_TOKEN> <PROJECT_NAME> <BRANCH_NAME>`
+  Checks specific TDDium project build status.
+  e.g. `tddium.check 0691ba134341d1baa978436535b6f2b79fec91 project branch_name`
   Hint: to get the token, log in to your TDDium dashboard, go to Organizations using the
   drop down in the top right corner. Then click on organization settings for the
   appropriate organization. Then click on "Chat Notifications"; CCmenu is at the
   bottom of the page. Extract the token from the URL, which looks like:
   `https://api.tddium.com/cc/ORGANIZATION_TOKEN/cctray.xml`
 
-* `snapci.check <URL TO CCTRAY FEED> "<PROJECT NAME>" "<STEP NAME>"`  
-  Checks the build status of a specific step in Snap CI  
-  e.g. `snapci.check https://snap-ci.com/some-random-hash/cctray.xml "my-github-org/my-repo (branch-name)" "MyStepInSnapCi"`  
-  To get the PROJECT NAME, look at the CCTray XML and paste in the value before the ` :: ` from `<Project name="">`  
+* `snapci.check <URL TO CCTRAY FEED> "<PROJECT NAME>" "<STEP NAME>"`
+  Checks the build status of a specific step in Snap CI
+  e.g. `snapci.check https://snap-ci.com/some-random-hash/cctray.xml "my-github-org/my-repo (branch-name)" "MyStepInSnapCi"`
+  To get the PROJECT NAME, look at the CCTray XML and paste in the value before the ` :: ` from `<Project name="">`
   To get the STEP NAME, look at the CCTray XML and paste in the value after the ` :: ` from `<Project name="">`
+
+* `port.check <hostname> <port>`
+  Checks (using `nc`) whether anything is listening on the specified host/port.
 
 Above scripts are located in `/Applications/Checkman.app/Contents/Resources/`.
 Checkman makes these scripts available by appending stated path to PATH env

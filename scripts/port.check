@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+require "rubygems"
+require "json"
+
+class Port
+  def initialize(host, port)
+    raise ArgumentError, "host must not be nil" \
+      unless @host = host
+
+    raise ArgumentError, "port must not be nil" \
+      unless @port = port
+
+    @ok = nil
+  end
+
+  def as_json(*)
+    {
+      :result => @ok,
+      :changing => false,
+      :url => nil,
+      :info => [
+        [:host, @host],
+        [:port, @port],
+        [:result, @result]
+      ]
+    }
+  end
+
+  def to_json(*)
+    check
+    JSON.dump(as_json)
+  end
+
+  private
+
+  def check
+    nc = "nc -vz #{@host} #{@port} 2>&1"
+    @result = `#{nc}`.tap { |o| $stderr.puts nc, o }
+    @ok = ($?.exitstatus == 0)
+  end
+end
+
+puts Port.new(*ARGV).to_json if __FILE__ == $0
